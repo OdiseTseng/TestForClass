@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="ivPosterThumbnail" type="id" />
+    <item name="tvPosterName" type="id" />
+    <item name="tvContent" type="id" />
+    <item name="btnLike" type="id" />
+    <item name="btnComment" type="id" />
+</resources>
