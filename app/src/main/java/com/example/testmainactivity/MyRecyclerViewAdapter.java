@@ -14,17 +14,20 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
     @NonNull
     @Override
     public MyRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);    //0-29格
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_grid_layout, parent, false);
         return new MyRecyclerViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyRecyclerViewHolder holder, int position) {
         String data = itemList.get(position);
+        /*                  //0-29格
         if(data != null){
             holder.bind(data);
             holder.setIntent(data);
         }
+        */
     }
 
     @Override

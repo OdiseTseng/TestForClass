@@ -29,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
         MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter();
         recyclerView.setAdapter(myRecyclerViewAdapter);
 
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-//        recyclerView.setLayoutManager(linearLayoutManager);
-
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+/*      //0-29格子
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getBaseContext(), 32);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {    //設格行數
             @Override
@@ -39,16 +39,17 @@ public class MainActivity extends AppCompatActivity {
                 return 8;
             }
         });
-
         recyclerView.setLayoutManager(gridLayoutManager);
 
-//        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-//        recyclerView.addItemDecoration(itemDecoration);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);       //裝飾線
+
+ */
         ArrayList<String> list = new ArrayList<>();
         int cnt = 0;
         do {
             list.add("" + cnt);
-        }while (cnt++ < 29);
+        }while (cnt++ < 3);//29 //設定0-29格子
 
         myRecyclerViewAdapter.setItemList(list);
         myRecyclerViewAdapter.notifyDataSetChanged();
