@@ -25,32 +25,50 @@
             android:layout_marginBottom="10dp"
             >
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="20dp"
-                android:layout_weight="5"
-                android:background="#FFFFFF"
-                android:orientation="horizontal">
+                android:layout_weight="5">
 
-                <TextView
-                    android:id="@+id/textView8"
+                <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="TextView"
-                    android:textSize="15sp" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:color/background_light" />
 
-                <TextView
-                    android:id="@+id/textView9"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="bottom|center|right"
-                    android:text="TextView"
-                    android:textSize="10sp" />
-            </LinearLayout>
+                    android:layout_weight="5"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"
+                    tools:layout_editor_absoluteX="137dp">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="TextView"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="bottom|center|right"
+                        android:text="TextView"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

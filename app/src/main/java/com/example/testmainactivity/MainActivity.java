@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,8 +49,9 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> list = new ArrayList<>();
         int cnt = 0;
         do {
-            list.add("" + cnt);
-        }while (cnt++ < 3);//29 //設定0-29格子
+//            list.add("" + cnt);
+            list.add(new Random().nextDouble()*1000 + 1 + "");
+        }while (cnt++ < 4);//29 //設定0-29格子
 
         myRecyclerViewAdapter.setItemList(list);
         myRecyclerViewAdapter.notifyDataSetChanged();

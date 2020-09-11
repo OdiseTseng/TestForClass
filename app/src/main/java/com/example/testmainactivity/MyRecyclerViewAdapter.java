@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Random;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHolder> {
     List<String> itemList;
@@ -28,6 +29,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
             holder.setIntent(data);
         }
         */
+
+        if(data != null){
+            holder.bind6(data);
+            holder.bind8(new Random().nextDouble()*1000 + 1 + "");
+        }
     }
 
     @Override
