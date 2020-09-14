@@ -1,5 +1,6 @@
 package com.example.testmainactivity;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
     @Override
     public MyRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 //        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);    //0-29格
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_grid_layout, parent, false);
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_grid_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_grid_layout2, parent, false);
         return new MyRecyclerViewHolder(view);
     }
 
@@ -30,10 +32,25 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
         }
         */
 
-        if(data != null){
-            holder.bind6(data);
-            holder.bind8(new Random().nextDouble()*1000 + 1 + "");
+        if(data != null) {
+            Log.i("Adapter",position+"");
+            if (position % 2 == 0) {
+
+                holder.bind11(data);
+                holder.bind12(new Random().nextDouble()*1000 + 1 + "");
+
+            } else {
+                holder.bind13(data);
+                holder.bind14(new Random().nextDouble()*1000 + 1 + "");
+            }
         }
+
+
+//        if(data != null){
+//            holder.bind6(data);
+//            holder.bind8(new Random().nextDouble()*1000 + 1 + "");
+//
+//        }
     }
 
     @Override

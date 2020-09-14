@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         do {
 //            list.add("" + cnt);
             list.add(new Random().nextDouble()*1000 + 1 + "");
-        }while (cnt++ < 4);//29 //設定0-29格子
+        }while (cnt++ < 17);//29 //設定0-29格子
 
         myRecyclerViewAdapter.setItemList(list);
         myRecyclerViewAdapter.notifyDataSetChanged();
