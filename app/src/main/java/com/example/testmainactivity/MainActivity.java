@@ -5,18 +5,28 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 
 import com.example.testmainactivity.adapter.GenderAdapter;
 import com.example.testmainactivity.adapter.MyRecyclerViewAdapter;
 import com.example.testmainactivity.data.StudentData;
+import com.example.testmainactivity.tool.ConnectionTool;
 import com.example.testmainactivity.tool.InputJSONDataTool;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 //        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter();
 //        recyclerView.setAdapter(myRecyclerViewAdapter);
 
-        GenderAdapter genderAdapter = new GenderAdapter();
+        final GenderAdapter genderAdapter = new GenderAdapter();
         recyclerView.setAdapter(genderAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -53,20 +63,45 @@ public class MainActivity extends AppCompatActivity {
 
  */
 //http://odata.tn.edu.tw/ebookapi/api/getOdataJH/?level=all
-        ArrayList<StudentData> studentDataArrayList = null;
-        try {
-//            ConnectionTool tool = new ConnectionTool("http://odata.tn.edu.tw/ebookapi/api/getOdataJH/");
-//            tool.openConnection();
-            InputJSONDataTool inputJSONDataTool = new InputJSONDataTool(this, R.raw.gender_data);
-            studentDataArrayList = inputJSONDataTool.readFile();
-//        } catch (MalformedURLException e) {
-//            Log.i("CTool Init()", e.getMessage());
-//        } catch (IOException e2) {
-//            Log.i("CTool openConnection()", e2.getMessage());
+        final ArrayList<StudentData> studentDataArrayList = new ArrayList<>();
+
+        handler = new Handler(Looper.myLooper()){
+            @Override
+            public void handleMessage(final Message message){
+                genderAdapter.notifyDataSetChanged();
+            }
+        };
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ConnectionTool tool = new ConnectionTool("http://odata.tn.edu.tw/ebookapi/api/getOdataJH/?level=all");
+                    tool.openConnection();
+                       String response = tool.getResponse();
+                       JSONArray array = new JSONArray(response);
+                       for (int i = 0; i < array.length(); i++){
+                           studentDataArrayList.add(new StudentData(array.getJSONObject(i)));
+                       }
+                       Log.i("studentDataArrayList",studentDataArrayList.size() +"");
+                       genderAdapter.setStudentDataList(studentDataArrayList);
+                       handler.sendEmptyMessage(0);
+                    } catch (MalformedURLException e) {
+                        Log.i("CTool Init()", e.getMessage());
+                    } catch (IOException e) {
+                        Log.i("CTool openConnection()", e.getMessage());
+                    } catch (JSONException e) {
+                        Log.i("CTool JSONArray()", e.getMessage());
+                    }
+                }
+            });
+            thread.start();
+
+//            InputJSONDataTool inputJSONDataTool = new InputJSONDataTool(this, R.raw.gender_data);
+//            studentDataArrayList = inputJSONDataTool.readFile();
+//        } catch (Exception e){
+//            Log.i("InputJSONDataTool", e.getMessage());
 //        }
-        } catch (Exception e){
-            Log.i("InputJSONDataTool", e.getMessage());
-        }
 
 
 //        rrayList<String> list = new ArrayList<>();
@@ -79,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
 //        myRecyclerViewAdapter.setItemList(list);
 //        myRecyclerViewAdapter.notifyDataSetChanged();
 
-        genderAdapter.setStudentDataList(studentDataArrayList);
-        genderAdapter.notifyDataSetChanged();
+
     }
 }

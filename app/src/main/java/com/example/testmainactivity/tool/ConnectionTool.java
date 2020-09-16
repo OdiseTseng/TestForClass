@@ -12,18 +12,15 @@ import java.net.URL;
 
 public class ConnectionTool {
 
-    URL url;
-    String authorization = "level=all";
+    private URL url;
+    private String response ="";
 
     public ConnectionTool(String url) throws MalformedURLException {
         this.url = new URL(url);
     }
 
     public boolean openConnection() throws IOException {
-        String response = "";
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        connection.setRequestProperty("Authorization", "Basic " + authorization);
         connection.setRequestMethod("GET");
         connection.setConnectTimeout(5000);
         connection.setReadTimeout(5000);
@@ -32,7 +29,7 @@ public class ConnectionTool {
         // 獲得返回值
         InputStream in = connection.getInputStream();
         response = getResponse(in);
-        Log.i("response", response);
+//        Log.i("response", response);
 
         connection.disconnect();
 
@@ -59,6 +56,10 @@ public class ConnectionTool {
             }
         }
         return builder.toString();
+    }
+
+    public String getResponse(){
+        return response;
     }
 
 }
