@@ -1,13 +1,16 @@
 package com.example.testmainactivity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
+import com.example.testmainactivity.adapter.GenderAdapter;
+import com.example.testmainactivity.adapter.MyRecyclerViewAdapter;
+import com.example.testmainactivity.data.StudentData;
+import com.example.testmainactivity.tool.InputJSONDataTool;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,16 +22,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, SecondActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("try1","Hi");
-        bundle.putString("try2","Hello");
-        intent.putExtras(bundle);
+//        Intent intent = new Intent(this, SecondActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("try1","Hi");
+//        bundle.putString("try2","Hello");
+//        intent.putExtras(bundle);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycleView);
 
-        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter();
-        recyclerView.setAdapter(myRecyclerViewAdapter);
+//        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter();
+//        recyclerView.setAdapter(myRecyclerViewAdapter);
+
+        GenderAdapter genderAdapter = new GenderAdapter();
+        recyclerView.setAdapter(genderAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -46,14 +52,34 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(itemDecoration);       //裝飾線
 
  */
-        ArrayList<String> list = new ArrayList<>();
-        int cnt = 0;
-        do {
-//            list.add("" + cnt);
-            list.add(new Random().nextDouble()*1000 + 1 + "");
-        }while (cnt++ < 17);//29 //設定0-29格子
+//http://odata.tn.edu.tw/ebookapi/api/getOdataJH/?level=all
+        ArrayList<StudentData> studentDataArrayList = null;
+        try {
+//            ConnectionTool tool = new ConnectionTool("http://odata.tn.edu.tw/ebookapi/api/getOdataJH/");
+//            tool.openConnection();
+            InputJSONDataTool inputJSONDataTool = new InputJSONDataTool(this, R.raw.gender_data);
+            studentDataArrayList = inputJSONDataTool.readFile();
+//        } catch (MalformedURLException e) {
+//            Log.i("CTool Init()", e.getMessage());
+//        } catch (IOException e2) {
+//            Log.i("CTool openConnection()", e2.getMessage());
+//        }
+        } catch (Exception e){
+            Log.i("InputJSONDataTool", e.getMessage());
+        }
 
-        myRecyclerViewAdapter.setItemList(list);
-        myRecyclerViewAdapter.notifyDataSetChanged();
+
+//        rrayList<String> list = new ArrayList<>();
+//        int cnt = 0;
+//        do {
+////            list.add("" + cnt);
+//            list.add(new Random().nextDouble()*1000 + 1 + "");
+//        }while (cnt++ < 17);//29 //設定0-29格子A
+
+//        myRecyclerViewAdapter.setItemList(list);
+//        myRecyclerViewAdapter.notifyDataSetChanged();
+
+        genderAdapter.setStudentDataList(studentDataArrayList);
+        genderAdapter.notifyDataSetChanged();
     }
 }

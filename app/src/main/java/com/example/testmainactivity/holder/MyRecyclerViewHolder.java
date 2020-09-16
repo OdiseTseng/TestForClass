@@ -1,4 +1,4 @@
-package com.example.testmainactivity;
+package com.example.testmainactivity.holder;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.testmainactivity.R;
+import com.example.testmainactivity.SecondActivity;
 
 public class MyRecyclerViewHolder extends RecyclerView.ViewHolder {
     LinearLayout linearLayout;
@@ -80,6 +83,8 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder {
         bundle.putString("data",data);
         intent.putExtras(bundle);
         createOnclickListener();
+
+
     }
 
     public void createOnclickListener(){

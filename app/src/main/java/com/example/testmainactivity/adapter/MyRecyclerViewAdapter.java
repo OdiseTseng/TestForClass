@@ -1,4 +1,4 @@
-package com.example.testmainactivity;
+package com.example.testmainactivity.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.testmainactivity.R;
+import com.example.testmainactivity.holder.MyRecyclerViewHolder;
 
 import java.util.List;
 import java.util.Random;
