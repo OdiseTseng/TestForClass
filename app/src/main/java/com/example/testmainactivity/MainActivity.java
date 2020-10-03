@@ -12,6 +12,8 @@ import android.util.Log;
 
 import com.example.testmainactivity.adapter.GenderAdapter;
 import com.example.testmainactivity.adapter.MyRecyclerViewAdapter;
+import com.example.testmainactivity.api.StudentApi;
+import com.example.testmainactivity.client.StudentRetrofitClient;
 import com.example.testmainactivity.data.StudentData;
 import com.example.testmainactivity.tool.ConnectionTool;
 import com.example.testmainactivity.tool.InputJSONDataTool;
@@ -22,7 +24,12 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(itemDecoration);       //裝飾線
 
  */
+
+/* 第三次作業
 //http://odata.tn.edu.tw/ebookapi/api/getOdataJH/?level=all
         final ArrayList<StudentData> studentDataArrayList = new ArrayList<>();
 
@@ -96,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             thread.start();
+ */
 
 //            InputJSONDataTool inputJSONDataTool = new InputJSONDataTool(this, R.raw.gender_data);
 //            studentDataArrayList = inputJSONDataTool.readFile();
@@ -103,6 +113,34 @@ public class MainActivity extends AppCompatActivity {
 //            Log.i("InputJSONDataTool", e.getMessage());
 //        }
 
+        ArrayList<StudentData> studentDataArrayList = new ArrayList<>();
+        handler = new Handler(Looper.myLooper()){
+            @Override
+            public void handleMessage(final Message message){
+                genderAdapter.notifyDataSetChanged();
+            }
+        };
+
+        StudentApi studentApi = StudentRetrofitClient.getInstance().getStudentApi();
+        Call<List<StudentData>> studentList =studentApi.getStudentList("getOdataJH", "all");
+        studentList.enqueue(new Callback<List<StudentData>>() {
+            @Override
+            public void onResponse(Call<List<StudentData>> call, Response<List<StudentData>> response) {
+                for(StudentData studentData:response.body()){
+                    Log.e("apiCall", studentData.toString() );
+                    studentDataArrayList.add(studentData);
+
+                }
+                Log.i("studentDataArrayList",studentDataArrayList.size() +"");
+                genderAdapter.setStudentDataList(studentDataArrayList);
+                handler.sendEmptyMessage(0);
+            }
+
+            @Override
+            public void onFailure(Call<List<StudentData>> call, Throwable t) {
+
+            }
+        });
 
 //        rrayList<String> list = new ArrayList<>();
 //        int cnt = 0;

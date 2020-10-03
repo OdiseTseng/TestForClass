@@ -37,4 +37,13 @@ public class StudentData {
     public void setNum(String num) {
         this.num = num;
     }
+
+    @Override
+    public String toString() {
+        return "StudentData{" +
+                "school='" + school + '\'' +
+                ", sex='" + sex + '\'' +
+                ", num='" + num + '\'' +
+                '}';
+    }
 }
