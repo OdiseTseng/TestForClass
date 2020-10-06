@@ -2,8 +2,6 @@ package com.example.testmainactivity;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -140,12 +138,12 @@ public class MainActivity extends AppCompatActivity {
          */
 
         ArrayList<DcardData> dacrdDataArrayList = new ArrayList<>();
-        handler = new Handler(Looper.myLooper()){
-            @Override
-            public void handleMessage(final Message message){
-                dcardPostAdapter.notifyDataSetChanged();
-            }
-        };
+//        handler = new Handler(Looper.myLooper()){
+//            @Override
+//            public void handleMessage(final Message message){
+//                dcardPostAdapter.notifyDataSetChanged();
+//            }
+//        };
 
         DcardApi dcardApi = DcardRetrofitClient.getInstance().getDcardApi();
         Call<List<DcardData>> dcardList =dcardApi.getDcardList("posts");
@@ -159,7 +157,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.i("dcardDataArrayList",dacrdDataArrayList.size() +"");
                 dcardPostAdapter.setDcardDataList(dacrdDataArrayList);
-                handler.sendEmptyMessage(0);
+                dcardPostAdapter.notifyDataSetChanged();
+//                handler.sendEmptyMessage(0);
             }
 
             @Override
