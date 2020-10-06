@@ -1,31 +1,22 @@
 package com.example.testmainactivity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-import com.example.testmainactivity.adapter.GenderAdapter;
-import com.example.testmainactivity.adapter.MyRecyclerViewAdapter;
-import com.example.testmainactivity.api.StudentApi;
-import com.example.testmainactivity.client.StudentRetrofitClient;
-import com.example.testmainactivity.data.StudentData;
-import com.example.testmainactivity.tool.ConnectionTool;
-import com.example.testmainactivity.tool.InputJSONDataTool;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.example.testmainactivity.adapter.DcardPostAdapter;
+import com.example.testmainactivity.api.DcardApi;
+import com.example.testmainactivity.client.DcardRetrofitClient;
+import com.example.testmainactivity.data.DcardData;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,8 +41,11 @@ public class MainActivity extends AppCompatActivity {
 //        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter();
 //        recyclerView.setAdapter(myRecyclerViewAdapter);
 
-        final GenderAdapter genderAdapter = new GenderAdapter();
-        recyclerView.setAdapter(genderAdapter);
+//        final GenderAdapter genderAdapter = new GenderAdapter();
+//        recyclerView.setAdapter(genderAdapter);
+        DcardPostAdapter dcardPostAdapter = new DcardPostAdapter();
+        recyclerView.setAdapter(dcardPostAdapter);
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -113,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 //            Log.i("InputJSONDataTool", e.getMessage());
 //        }
 
+        /* 重新串接student api
         ArrayList<StudentData> studentDataArrayList = new ArrayList<>();
         handler = new Handler(Looper.myLooper()){
             @Override
@@ -138,6 +133,37 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<StudentData>> call, Throwable t) {
+
+            }
+        });
+
+         */
+
+        ArrayList<DcardData> dacrdDataArrayList = new ArrayList<>();
+        handler = new Handler(Looper.myLooper()){
+            @Override
+            public void handleMessage(final Message message){
+                dcardPostAdapter.notifyDataSetChanged();
+            }
+        };
+
+        DcardApi dcardApi = DcardRetrofitClient.getInstance().getDcardApi();
+        Call<List<DcardData>> dcardList =dcardApi.getDcardList("posts");
+        dcardList.enqueue(new Callback<List<DcardData>>() {
+            @Override
+            public void onResponse(Call<List<DcardData>> call, Response<List<DcardData>> response) {
+                for(DcardData dcardData:response.body()){
+                    Log.e("apiCall", dcardData.toString() );
+                    dacrdDataArrayList.add(dcardData);
+
+                }
+                Log.i("dcardDataArrayList",dacrdDataArrayList.size() +"");
+                dcardPostAdapter.setDcardDataList(dacrdDataArrayList);
+                handler.sendEmptyMessage(0);
+            }
+
+            @Override
+            public void onFailure(Call<List<DcardData>> call, Throwable t) {
 
             }
         });
