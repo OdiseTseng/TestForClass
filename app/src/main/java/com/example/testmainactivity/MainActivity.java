@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testmainactivity.adapter.DcardPostAdapter;
+import com.example.testmainactivity.adapter.VocabularyAdapter;
 import com.example.testmainactivity.api.DcardApi;
 import com.example.testmainactivity.client.DcardRetrofitClient;
 import com.example.testmainactivity.data.DcardData;
+import com.example.testmainactivity.data.VocabularyData;
+import com.example.testmainactivity.data.WordData;
+import com.example.testmainactivity.tool.InputJSONDataTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +47,11 @@ public class MainActivity extends AppCompatActivity {
 
 //        final GenderAdapter genderAdapter = new GenderAdapter();
 //        recyclerView.setAdapter(genderAdapter);
-        DcardPostAdapter dcardPostAdapter = new DcardPostAdapter();
-        recyclerView.setAdapter(dcardPostAdapter);
+//        DcardPostAdapter dcardPostAdapter = new DcardPostAdapter();
+//        recyclerView.setAdapter(dcardPostAdapter);
 
+        VocabularyAdapter vocabularyAdapter = new VocabularyAdapter();
+        recyclerView.setAdapter(vocabularyAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -63,6 +69,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(itemDecoration);       //裝飾線
 
  */
+
+// first test
+//        rrayList<String> list = new ArrayList<>();
+//        int cnt = 0;
+//        do {
+////            list.add("" + cnt);
+//            list.add(new Random().nextDouble()*1000 + 1 + "");
+//        }while (cnt++ < 17);//29 //設定0-29格子A
+
+//        myRecyclerViewAdapter.setItemList(list);
+//        myRecyclerViewAdapter.notifyDataSetChanged();
 
 /* 第三次作業
 //http://odata.tn.edu.tw/ebookapi/api/getOdataJH/?level=all
@@ -101,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
             thread.start();
  */
 
+//讀檔
 //            InputJSONDataTool inputJSONDataTool = new InputJSONDataTool(this, R.raw.gender_data);
 //            studentDataArrayList = inputJSONDataTool.readFile();
 //        } catch (Exception e){
@@ -139,7 +157,8 @@ public class MainActivity extends AppCompatActivity {
 
          */
 
-        ArrayList<DcardData> dacrdDataArrayList = new ArrayList<>();
+        //Dcard
+/*        ArrayList<DcardData> dacrdDataArrayList = new ArrayList<>();
         handler = new Handler(Looper.myLooper()){
             @Override
             public void handleMessage(final Message message){
@@ -159,25 +178,31 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.i("dcardDataArrayList",dacrdDataArrayList.size() +"");
                 dcardPostAdapter.setDcardDataList(dacrdDataArrayList);
-                handler.sendEmptyMessage(0);
+                dcardPostAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(Call<List<DcardData>> call, Throwable t) {
 
             }
-        });
+        });*/
 
-//        rrayList<String> list = new ArrayList<>();
-//        int cnt = 0;
-//        do {
-////            list.add("" + cnt);
-//            list.add(new Random().nextDouble()*1000 + 1 + "");
-//        }while (cnt++ < 17);//29 //設定0-29格子A
 
-//        myRecyclerViewAdapter.setItemList(list);
-//        myRecyclerViewAdapter.notifyDataSetChanged();
+        //讀檔
+        VocabularyData vocabularyData = null;
 
+
+        InputJSONDataTool inputJSONDataTool = new InputJSONDataTool(this, R.raw.vocabulary);
+        try {
+            vocabularyData = inputJSONDataTool.readFileFromVocab();
+        } catch (Exception e) {
+            Log.d("vocabularyData", e.getMessage());
+        }
+
+        Log.d("All vocabularyData", vocabularyData.toString());
+
+        vocabularyAdapter.setStudentDataList(vocabularyData);
+        vocabularyAdapter.notifyDataSetChanged();
 
     }
 }

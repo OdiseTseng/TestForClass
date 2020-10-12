@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.testmainactivity.data.StudentData;
+import com.example.testmainactivity.data.VocabularyData;
+import com.example.testmainactivity.data.WordData;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,5 +42,31 @@ public class InputJSONDataTool {
             }
 
         return studentDataList;
+    }
+
+    public VocabularyData readFileFromVocab() throws Exception{
+        String line;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        ArrayList<WordData> wordDatas = new ArrayList<>();
+
+        while((line = reader.readLine()) != null){
+            stringBuilder.append(line);
+        }
+
+        Log.i("vocabulary[1]", stringBuilder.toString());
+
+        JSONObject jo = new JSONObject(stringBuilder.toString());
+
+        JSONArray ary = jo.getJSONArray("words");
+        for (int i=0; i <ary.length(); i++){
+            Log.i("try data",ary.getJSONObject(i).toString());
+            wordDatas.add(new WordData(ary.getJSONObject(i)));
+        }
+
+        VocabularyData vocabularyData = new VocabularyData();
+        vocabularyData.setWords(wordDatas);
+
+        return vocabularyData;
     }
 }
