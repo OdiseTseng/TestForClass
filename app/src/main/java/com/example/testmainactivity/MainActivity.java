@@ -118,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
             thread.start();
  */
 
-//讀檔
 //            InputJSONDataTool inputJSONDataTool = new InputJSONDataTool(this, R.raw.gender_data);
 //            studentDataArrayList = inputJSONDataTool.readFile();
 //        } catch (Exception e){
