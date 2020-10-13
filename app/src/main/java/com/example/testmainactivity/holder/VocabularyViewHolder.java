@@ -1,5 +1,7 @@
 package com.example.testmainactivity.holder;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +26,23 @@ public class VocabularyViewHolder extends RecyclerView.ViewHolder {
         textStar = itemView.findViewById(R.id.textStar);
         textWord = itemView.findViewById(R.id.textWord);
         linearVocabulary = itemView.findViewById(R.id.linearVocabulary);
+
+        textWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId() == R.id.textWord){
+                    AlertDialog alertDialog = new AlertDialog.Builder(itemView.getContext())
+                            .setTitle("")
+                            .setMessage(means)
+                            .setPositiveButton("關閉視窗", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            }).show();
+                }
+            }
+        });
     }
 
     public void bind(WordData wordData){
