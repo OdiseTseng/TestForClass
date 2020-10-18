@@ -2,29 +2,15 @@ package com.example.testmainactivity;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.testmainactivity.adapter.DcardPostAdapter;
-import com.example.testmainactivity.adapter.VocabularyAdapter;
-import com.example.testmainactivity.api.DcardApi;
-import com.example.testmainactivity.client.DcardRetrofitClient;
-import com.example.testmainactivity.data.DcardData;
-import com.example.testmainactivity.data.VocabularyData;
-import com.example.testmainactivity.data.WordData;
+import com.example.testmainactivity.view.VocabularyAdapter;
+import com.example.testmainactivity.model.VocabularyData;
 import com.example.testmainactivity.tool.InputJSONDataTool;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -3,9 +3,9 @@ package com.example.testmainactivity.tool;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.testmainactivity.data.StudentData;
-import com.example.testmainactivity.data.VocabularyData;
-import com.example.testmainactivity.data.WordData;
+import com.example.testmainactivity.model.StudentData;
+import com.example.testmainactivity.model.VocabularyData;
+import com.example.testmainactivity.model.WordData;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
