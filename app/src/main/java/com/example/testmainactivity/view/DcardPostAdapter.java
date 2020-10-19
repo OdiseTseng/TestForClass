@@ -1,5 +1,6 @@
 package com.example.testmainactivity.view;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class DcardPostAdapter extends RecyclerView.Adapter<DcardViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull DcardViewHolder holder, int position) {
         DcardData dcardData = dcardDataList.get(position);
-
+        Log.d("dcardData", dcardData.toString());
         if (dcardData != null){
             holder.bind(dcardData);
         }

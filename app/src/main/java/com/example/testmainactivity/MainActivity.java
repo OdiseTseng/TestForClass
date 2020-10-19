@@ -5,20 +5,29 @@ import android.os.Handler;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.testmainactivity.view.DcardPostAdapter;
 import com.example.testmainactivity.view.VocabularyAdapter;
 import com.example.testmainactivity.model.VocabularyData;
 import com.example.testmainactivity.tool.InputJSONDataTool;
+import com.example.testmainactivity.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    Handler handler;
+//    Handler handler;
+    DcardPostAdapter dcardPostAdapter;
+    MainViewModel   viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        viewModel.fetchDataFromApi("posts");
+        initView();
 
 //        Intent intent = new Intent(this, SecondActivity.class);
 //        Bundle bundle = new Bundle();
@@ -26,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 //        bundle.putString("try2","Hello");
 //        intent.putExtras(bundle);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycleView);
+//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycleView);
 
 //        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter();
 //        recyclerView.setAdapter(myRecyclerViewAdapter);
@@ -36,11 +45,14 @@ public class MainActivity extends AppCompatActivity {
 //        DcardPostAdapter dcardPostAdapter = new DcardPostAdapter();
 //        recyclerView.setAdapter(dcardPostAdapter);
 
-        VocabularyAdapter vocabularyAdapter = new VocabularyAdapter();
-        recyclerView.setAdapter(vocabularyAdapter);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+//        VocabularyAdapter vocabularyAdapter = new VocabularyAdapter();
+//        recyclerView.setAdapter(vocabularyAdapter);
+//
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+//        recyclerView.setLayoutManager(linearLayoutManager);
+
+
 /*      //0-29格子
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getBaseContext(), 32);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {    //設格行數
@@ -174,20 +186,30 @@ public class MainActivity extends AppCompatActivity {
 
 
         //讀檔
-        VocabularyData vocabularyData = null;
+//        VocabularyData vocabularyData = null;
+//
+//
+//        InputJSONDataTool inputJSONDataTool = new InputJSONDataTool(this, R.raw.vocabulary);
+//        try {
+//            vocabularyData = inputJSONDataTool.readFileFromVocab();
+//        } catch (Exception e) {
+//            Log.d("vocabularyData", e.getMessage());
+//        }
+//
+//        Log.d("All vocabularyData", vocabularyData.toString());
+//
+//        vocabularyAdapter.setStudentDataList(vocabularyData);
+//        vocabularyAdapter.notifyDataSetChanged();
 
+    }
 
-        InputJSONDataTool inputJSONDataTool = new InputJSONDataTool(this, R.raw.vocabulary);
-        try {
-            vocabularyData = inputJSONDataTool.readFileFromVocab();
-        } catch (Exception e) {
-            Log.d("vocabularyData", e.getMessage());
-        }
-
-        Log.d("All vocabularyData", vocabularyData.toString());
-
-        vocabularyAdapter.setStudentDataList(vocabularyData);
-        vocabularyAdapter.notifyDataSetChanged();
-
+    private void initView(){
+        RecyclerView recyclerView = findViewById(R.id.recycleView);
+        dcardPostAdapter = new DcardPostAdapter();
+        recyclerView.setAdapter(dcardPostAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Log.d("DcardDataList", viewModel.getDcardDataList().size() + "");
+        dcardPostAdapter.setDcardDataList(viewModel.getDcardDataList());
+        dcardPostAdapter.notifyDataSetChanged();
     }
 }

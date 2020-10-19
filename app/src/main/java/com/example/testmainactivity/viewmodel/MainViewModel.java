@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class MainViewModel extends AndroidViewModel {
 
-    private List<DcardData> dcardDataList;
+    private ArrayList<DcardData> dcardDataList;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -27,9 +27,9 @@ public class MainViewModel extends AndroidViewModel {
         dcardDataList = new ArrayList<>();
     }
 
-    public void fetchDataFromApi(){
+    public void fetchDataFromApi(String target){
         DcardApi dcardApi = DcardRetrofitClient.getInstance().getDcardApi();
-        Call<List<DcardData>> dcardList = dcardApi.getDcardList("posts");
+        Call<List<DcardData>> dcardList = dcardApi.getDcardList(target);
 
         dcardList.enqueue(new Callback<List<DcardData>>() {
             @Override
@@ -39,7 +39,7 @@ public class MainViewModel extends AndroidViewModel {
 //                    dacrdDataArrayList.add(dcardData);
                     dcardDataList.add(dcardData);
                 }
-//                Log.i("dcardDataArrayList",dacrdDataArrayList.size() +"");
+                Log.i("dcardDataArrayList",dcardDataList.size() +"");
 //                dcardPostAdapter.setDcardDataList(dacrdDataArrayList);
 //                dcardPostAdapter.notifyDataSetChanged();
             }
@@ -51,7 +51,7 @@ public class MainViewModel extends AndroidViewModel {
         });
     }
 
-    public List<DcardData> getDcardDataList() {
+    public ArrayList<DcardData> getDcardDataList() {
         return dcardDataList;
     }
 }
