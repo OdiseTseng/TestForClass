@@ -3,31 +3,39 @@ package com.example.testmainactivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.testmainactivity.model.DcardEntity;
 import com.example.testmainactivity.view.DcardPostAdapter;
 import com.example.testmainactivity.view.VocabularyAdapter;
 import com.example.testmainactivity.model.VocabularyData;
 import com.example.testmainactivity.tool.InputJSONDataTool;
 import com.example.testmainactivity.viewmodel.MainViewModel;
+import com.example.testmainactivity.viewmodel.SecViewModel;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
 //    Handler handler;
     DcardPostAdapter dcardPostAdapter;
-    MainViewModel   viewModel;
+    SecViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        viewModel = new ViewModelProvider(this).get(SecViewModel.class);
         viewModel.fetchDataFromApi("posts");
         initView();
+        initObserver();
+        initListener();
 
 //        Intent intent = new Intent(this, SecondActivity.class);
 //        Bundle bundle = new Bundle();
@@ -208,8 +216,26 @@ public class MainActivity extends AppCompatActivity {
         dcardPostAdapter = new DcardPostAdapter();
         recyclerView.setAdapter(dcardPostAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Log.d("DcardDataList", viewModel.getDcardDataList().size() + "");
-        dcardPostAdapter.setDcardDataList(viewModel.getDcardDataList());
+//        Log.d("DcardDataList", viewModel.getDcardDataList().size() + "");
+//        dcardPostAdapter.setDcardDataList(viewModel.getDcardDataList());
         dcardPostAdapter.notifyDataSetChanged();
+    }
+
+    private void initObserver(){
+        viewModel.getDcardRefreshEntityList().observe(this, new Observer<List<DcardEntity>>() {
+            @Override
+            public void onChanged(List<DcardEntity> dcardEntities) {
+                dcardPostAdapter.setDcardEntities(dcardEntities);
+            }
+        });
+    }
+
+    private void initListener(){
+        findViewById(R.id.btnRefresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.fetchDataFromApi("posts");
+            }
+        });
     }
 }

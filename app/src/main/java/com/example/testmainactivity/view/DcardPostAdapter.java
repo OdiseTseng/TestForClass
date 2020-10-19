@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testmainactivity.R;
 import com.example.testmainactivity.model.DcardData;
+import com.example.testmainactivity.model.DcardEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DcardPostAdapter extends RecyclerView.Adapter<DcardViewHolder> {
 
     ArrayList<DcardData> dcardDataList;
+    List<DcardEntity> dcardEntities;
 
     @NonNull
     @Override
@@ -26,11 +29,17 @@ public class DcardPostAdapter extends RecyclerView.Adapter<DcardViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DcardViewHolder holder, int position) {
-        DcardData dcardData = dcardDataList.get(position);
-        Log.d("dcardData", dcardData.toString());
-        if (dcardData != null){
-            holder.bind(dcardData);
+//        DcardData dcardData = dcardDataList.get(position);
+//        Log.d("dcardData", dcardData.toString());
+//        if (dcardData != null){
+//            holder.bind(dcardData);
+//        }
+
+        DcardEntity dcardEntity = dcardEntities.get(position);
+                if (dcardEntity != null){
+            holder.bind(dcardEntity);
         }
+
     }
 
     @Override
@@ -40,5 +49,9 @@ public class DcardPostAdapter extends RecyclerView.Adapter<DcardViewHolder> {
 
     public void setDcardDataList(ArrayList<DcardData> dcardDataList){
         this.dcardDataList = dcardDataList;
+    }
+
+    public void setDcardEntities(List<DcardEntity> entityArrayList){
+        this.dcardEntities = entityArrayList;
     }
 }

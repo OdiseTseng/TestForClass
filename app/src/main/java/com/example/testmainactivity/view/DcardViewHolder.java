@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testmainactivity.R;
 import com.example.testmainactivity.model.DcardData;
+import com.example.testmainactivity.model.DcardEntity;
 
 public class DcardViewHolder extends RecyclerView.ViewHolder {
 
@@ -48,6 +49,23 @@ public class DcardViewHolder extends RecyclerView.ViewHolder {
         txtLikeCnt.setText(dcardData.getLikeCount());
 
         txtCommCnt.setText(dcardData.getCommentCount());
+    }
+
+    public void bind(DcardEntity dcardEntity){
+
+//        if("女".equals(dcardEntity.getSex())){
+//            linearSchool.setBackgroundColor(linearSchool.getResources().getColor(R.color.colorPink));
+//        }else{
+//            linearSchool.setBackgroundColor(linearSchool.getResources().getColor(R.color.colorPrimary));
+//        }
+
+        txtForumName.setText(dcardEntity.getForumName());
+        txtPosterSchool.setText(dcardEntity.getSchool());
+        txtTitle.setText(dcardEntity.getTitle());
+        txtExcerpt.setText(dcardEntity.getExcerpt());
+        txtLikeCnt.setText(dcardEntity.getLikeCount());
+
+        txtCommCnt.setText(dcardEntity.getCommentCount());
     }
 
 }
